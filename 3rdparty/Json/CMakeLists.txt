@@ -6,7 +6,7 @@ project(Json LANGUAGES CXX)
 ## CONFIGURATION
 ##
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Enabling export of all symbols to create a dynamic library
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
