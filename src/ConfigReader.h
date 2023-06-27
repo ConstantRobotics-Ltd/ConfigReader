@@ -23,7 +23,7 @@ public:
 
     /**
      * @brief Get string of current class version.
-     * @return String of current class version.
+     * @return String of current class version in format "Major.Minor.Patch".
      */
     static std::string getVersion();
 
@@ -40,32 +40,28 @@ public:
     /**
      * @brief Read configuration from file.
      * @param fileName Configuration file name.
-     * @return true if the configuration was read.
-     * @return false if the configuration not read.
+     * @return TRUE if the configuration was read or FALSE if not.
      */
     bool readFromFile(std::string fileName);
 
     /**
      * @brief Write configuration to file.
      * @param fileName File name to write configuration.
-     * @return true if the configuration was writed.
-     * @return false if the configuration not writed.
+     * @return TRUE if the configuration was writed or FALSE if not.
      */
     bool writeToFile(std::string fileName);
 
     /**
      * @brief Read configuration from string.
      * @param json String to read configuration.
-     * @return true if the configuration was read.
-     * @return false if the configuration not read.
+     * @return TRUE if the configuration was read or FALSE if not.
      */
     bool readFromString(std::string json);
 
     /**
      * @brief Write configuration to string.
      * @param json String name to write configuration.
-     * @return true if the configuration was writed.
-     * @return false if the configuration not writed.
+     * @return TRUE if the configuration was writed or FALSE if not.
      */
     bool writeToString(std::string& json);
 
@@ -73,8 +69,7 @@ public:
      * @brief Get object.
      * @param obj Object.
      * @param objName Name of object/property.
-     * @return true If the object was read.
-     * @return false If the object not read.
+     * @return TRUE If the object was read or FALSE if not.
      */
     template<class T>
     bool get(T& obj, std::string objName = "") {
@@ -108,8 +103,7 @@ public:
      * @brief Set object.
      * @param obj Object.
      * @param objName Name of object/property.
-     * @return true If the object was set.
-     * @return false If the object not set.
+     * @return TRUE If the object was set or FALSE if not.
      */
     template<class T>
     bool set(T& obj, std::string objName = "") {
@@ -139,16 +133,11 @@ public:
 
 private:
 
-    json m_jsonConf;    // JSON object.
+    /// Json object.
+    json m_jsonConf;
 
+    /// Set object recursive.
     json setRecursive(json dst, json src, std::vector<std::string> tokenList);
-};
-
-class InitParamsBase
-{
-public:
-    std::vector<std::string> initList;
-    std::string toInitString();
 };
 }
 }

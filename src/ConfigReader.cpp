@@ -11,9 +11,7 @@
 std::string cr::utils::ConfigReader::getVersion()
 {
     // Return version string.
-    return std::to_string(CONFIG_READRER_MAJOR_VERSION) + "." +
-            std::to_string(CONFIG_READRER_MINOR_VERSION) + "." +
-            std::to_string(CONFIG_READRER_PATCH_VERSION);
+    return CONFIG_READRER_VERSION;
 }
 
 
@@ -119,7 +117,8 @@ bool cr::utils::ConfigReader::writeToString(std::string &json)
 
 
 // Set recursive.
-json cr::utils::ConfigReader::setRecursive(json dst, json src, std::vector<std::string> tokenList)
+json cr::utils::ConfigReader::setRecursive(json dst, json src,
+                                           std::vector<std::string> tokenList)
 {
     // Check list size.
     if (tokenList.size() > 0)
@@ -144,15 +143,5 @@ json cr::utils::ConfigReader::setRecursive(json dst, json src, std::vector<std::
     }
 }
 
-
-
-std::string cr::utils::InitParamsBase::toInitString()
-{
-    const char* const delim = ";";
-    std::ostringstream imploded;
-    std::copy(initList.begin(), initList.end(),
-               std::ostream_iterator<std::string>(imploded, delim));
-    return imploded.str();
-}
 
 
