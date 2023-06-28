@@ -30,7 +30,7 @@
 
 # Overview
 
-**ConfigReader** library designed to read/write config files or strings in JSON format. The library provides simple interface to read application configuration parameters from file/string or write configuration parameters to file/string. The library is a wrapper over the library [JSON for Modern C++](#[nlohmann/json: JSON for Modern C++ (github.com)](https://github.com/nlohmann/json)) (included as source code under MIT license) and provides simple interface to work with JSON config structures.
+**ConfigReader** library designed to read/write config files or strings in JSON format. The library provides simple interface to read application configuration parameters from file/string or write configuration parameters to file/string. The library is a wrapper over the library [JSON for Modern C++](https://github.com/nlohmann/json) (included as source code under MIT license) and provides simple interface to work with JSON config structures.
 
 
 
@@ -130,9 +130,90 @@ public:
 
 ## Basic principles
 
-**getVersion()** method return string of current version of **ConfigReader** class. Method declaration:
+Before using **ConfigReader**, the user must define the parameters structure. The parameter structure is a class whose fields are marked with a special macro (**JSON_READABLE** macro) for reading and writing to JSON. Parameters are written and read according to the user-defined parameter class. Class example:
 
+```cpp
+/// Custom parameter class.
+class CustomParam
+{
+public:
+    /// Parameter 1.
+    int param1{1};
+    /// Parameter 2.
+    int param2{2};
 
+    /// Declare params as readable for JSON.
+    JSON_READABLE(CustomParam, param1, param2)
+};
+
+/// Parameters class.
+class Params
+{
+public:
+    /// Parameter.
+    int param1{-10};
+    /// Parameter.
+    float param2{10.0f};
+    /// Parameter.
+    double param3{-10.0};
+    /// Parameter.
+    bool param4{false};
+    /// Mass of parameters.
+    float mass1[3];
+    /// Mass of parameters.
+    int mass2[3];
+    /// List of parameters.
+    vector<int> list1{vector<int>()};
+    /// List of objects.
+    vector<CustomParam> list2{vector<CustomParam>()};
+
+    /// Declare params as readable for JSON.
+    JSON_READABLE(Params, param1, param2, param3, mass1, list1, list2)
+};
+```
+
+**ConfigReader** supports all basic types (int, float, double, string, bool, buffers) and list of other classes as well. To be readable/writable to json variables should be listed in  **JSON_READABLE** macro. Some parameters can be excluded from JSON and user can use them as private fields. Example of JSON file according to given class (as you can see **param4** and **mass2** excluded from JSON):
+
+```json
+{
+    "Params": {
+        "list1": [
+            235,
+            44,
+            169,
+            3
+        ],
+        "list2": [
+            {
+                "param1": 33,
+                "param2": 187
+            },
+            {
+                "param1": 239,
+                "param2": 95
+            },
+            {
+                "param1": 95,
+                "param2": 76
+            },
+            {
+                "param1": 252,
+                "param2": 16
+            }
+        ],
+        "mass1": [
+            236.0,
+            190.0,
+            212.0
+        ],
+        "param1": 41,
+        "param2": 107.0,
+        "param3": 214.0
+    }
+}
+```
+
+**ConfigReader** reads and writes params only according to defined parameters class. During reading params from file/string if parameter has different structure as define params the library will return ERROR.
 
 
 
@@ -480,6 +561,47 @@ int main(void)
     else
     {
         cout << "ERROR: list2 has wrong size" << endl;
+    }
+}
+```
+
+Result **TestConfig.json** files for this example:
+
+```json
+{
+    "Params": {
+        "list1": [
+            235,
+            44,
+            169,
+            3
+        ],
+        "list2": [
+            {
+                "param1": 33,
+                "param2": 187
+            },
+            {
+                "param1": 239,
+                "param2": 95
+            },
+            {
+                "param1": 95,
+                "param2": 76
+            },
+            {
+                "param1": 252,
+                "param2": 16
+            }
+        ],
+        "mass1": [
+            236.0,
+            190.0,
+            212.0
+        ],
+        "param1": 41,
+        "param2": 107.0,
+        "param3": 214.0
     }
 }
 ```
