@@ -1,36 +1,37 @@
-![logo](_static/config_reader_logo.png)
+![configreader_logo](_static/configreader_web_logo.png)
 
-**v1.3.0**
 
-------
+
+**v1.3.1**
 
 
 
 # Table of contents
 
-- [Overview](#Overview)
-- [Versions](#Versions)
-- [ConfigReader class description](#ConfigReader-class-description)
-  - [ConfigReader class declaration](#ConfigReader-class-declaration)
-  - [Basic principles](#Basic-principles)
-  - [getVersion method](#getVersion-method)
-  - [readFromFile method](#eadFromFile-method)
-  - [writeToFile method](#writeToFile-method)
-  - [readFromString method](#readFromString-method)
-  - [writeToString method](#writeToString-method)
+- [Overview](#overview)
+- [Versions](#versions)
+- [Library files](#library-files)
+- [ConfigReader class description](#configreader-class-description)
+  - [ConfigReader class declaration](#configreader-class-declaration)
+  - [Basic principles](#basic-principles)
+  - [getVersion method](#getversion-method)
+  - [readFromFile method](#readfromfile-method)
+  - [writeToFile method](#writetofile-method)
+  - [readFromString method](#readfromstring-method)
+  - [writeToString method](#writetostring-method)
   - [get method](#get-method)
   - [set method](#set-method)
-- [Examples](#Examples)
-  - [Read and write config file](#Read-and-write-config-file)
-  - [Read and write parameters to string](#Read-and-write-parameters-to-string)
+- [Examples](#examples)
+  - [Read and write config file](#read-and-write-config-file)
+  - [Read and write parameters to string](#read-and-write-parameters-to-string)
 
-- [Build and connect to your project](#Build-and-connect-to-your-project)
+- [Build and connect to your project](#build-and-connect-to-your-project)
 
 
 
 # Overview
 
-**ConfigReader** library designed to read/write config files or strings in JSON format. The library provides simple interface to read application configuration parameters from file/string or write configuration parameters to file/string. The library is a wrapper over the library [JSON for Modern C++](https://github.com/nlohmann/json) (included as source code under MIT license) and provides simple interface to work with JSON config structures.
+The **ConfigReader** library is designed to read / write config files or strings in JSON format. The library provides simple interface to read application configuration parameters from file / string or write configuration parameters to file / string. The library is a wrapper over the library [JSON for Modern C++](https://github.com/nlohmann/json) (included as source code under MIT license) and provides simple interface to work with JSON config structures. The library uses C++17 standard and doesn't require any third-party dependencies to be installed in OS. The library is licensed under the **Apache 2.0** license.
 
 
 
@@ -44,6 +45,38 @@
 | 1.1.0   | 13.02.2023   | - Changed C++ version from C++11 to C++17.                   |
 | 1.2.0   | 26.04.2023   | - CMake updated.                                             |
 | 1.3.0   | 27.06.2023   | - Useless methods excluded.<br />- Added examples.<br />- Added documentation.<br />- Added license.<br />- Repository made public. |
+| 1.3.1   | 19.03.2024   | - Documentation updated.                                     |
+
+
+
+# Library files
+
+
+
+The library supplied by source code only. The user would be given a set of files in the form of a CMake project (repository). The repository structure is shown below:
+
+```
+CMakeLists.txt ---------------- Main CMake file of the library.
+3rdparty ---------------------- Folder with third party libraries.
+    CMakeLists.txt ------------ CMake file to include third party library.
+    Json ---------------------- Folder with JSON for Modern C++ library.
+        CMakeLists.txt -------- CMake file of the library.
+        nlohmann -------------- Folder with library source code.
+            json.hpp ---------- C++ implementation file.
+src --------------------------- Folder with library source code.
+    CMakeLists.txt ------------ CMake file.
+    ConfigReader.h ------------ Main library header file.
+    ConfigReaderVersion.h ----- Header file with library version.
+    ConfigReaderVersion.h.in -- File for CMake to generate version header.
+    ConfigReader.cpp ---------- C++ implementation file.
+examples ---------------------- Folder with examples.
+    WriteAndReadFile ---------- Folder with example application.
+        CMakeLists.txt -------- CMake file of example application.
+        main.cpp -------------- Source C++ file of example application.
+    WriteAndReadString -------- Folder with example application.
+        CMakeLists.txt -------- CMake file of example application.
+        main.cpp -------------- Source C++ file of example application.
+```
 
 
 
@@ -56,74 +89,39 @@
 **ConfigReader.h** file contains **ConfigReader** class declaration. Class declaration:
 
 ```cpp
-namespace cr
-{
-namespace utils
-{
-#define JSON_READABLE(Type, ...) \
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Type, __VA_ARGS__)
-/**
- * @brief Config reader class.
- */
 class ConfigReader
 {
 public:
-    /**
-     * @brief Get string of current class version.
-     * @return String of current class version in format "Major.Minor.Patch".
-     */
+
+    /// Get string of current class version.
     static std::string getVersion();
-    /**
-     * @brief Class constructor.
-     */
+
+    /// Class constructor.
     ConfigReader();
-    /**
-     * @brief Class destructor.
-     */
+
+    /// Class destructor.
     ~ConfigReader();
-    /**
-     * @brief Read configuration from file.
-     * @param fileName Configuration file name.
-     * @return TRUE if the configuration was read or FALSE if not.
-     */
+
+    /// Read configuration from file.
     bool readFromFile(std::string fileName);
-    /**
-     * @brief Write configuration to file.
-     * @param fileName File name to write configuration.
-     * @return TRUE if the configuration was writed or FALSE if not.
-     */
+
+    /// Write configuration to file.
     bool writeToFile(std::string fileName);
-    /**
-     * @brief Read configuration from string.
-     * @param json String to read configuration.
-     * @return TRUE if the configuration was read or FALSE if not.
-     */
+
+    /// Read configuration from string.
     bool readFromString(std::string json);
-    /**
-     * @brief Write configuration to string.
-     * @param json String name to write configuration.
-     * @return TRUE if the configuration was writed or FALSE if not.
-     */
+
+    /// Write configuration to string.
     bool writeToString(std::string& json);
-    /**
-     * @brief Get object.
-     * @param obj Object.
-     * @param objName Name of object/property.
-     * @return TRUE If the object was read or FALSE if not.
-     */
+    
+    /// Get object.
     template<class T>
     bool get(T& obj, std::string objName = "");
-    /**
-     * @brief Set object.
-     * @param obj Object.
-     * @param objName Name of object/property.
-     * @return TRUE If the object was set or FALSE if not.
-     */
+    
+    /// Set object.
     template<class T>
     bool set(T& obj, std::string objName = "");
 };
-}
-}
 ```
 
 
@@ -172,7 +170,7 @@ public:
 };
 ```
 
-**ConfigReader** supports all basic types (int, float, double, string, bool, buffers) and list of other classes as well. To be readable/writable to json variables should be listed in  **JSON_READABLE** macro. Some parameters can be excluded from JSON and user can use them as private fields. Example of JSON file according to given class (as you can see **param4** and **mass2** excluded from JSON):
+**ConfigReader** supports all basic types (int, float, double, string, bool, buffers) and list of other classes as well. To be readable / writable json variables should be listed in **JSON_READABLE** macro. Some parameters can be excluded from JSON and user can use them as private fields. Example of JSON file according to given class (as you can see **param4** and **mass2** excluded from JSON):
 
 ```json
 {
@@ -219,7 +217,7 @@ public:
 
 ## getVersion method
 
-**getVersion()** method returns string of **ConfigReader** class version. Method declaration:
+The **getVersion()** method returns string of **ConfigReader** class version. Method declaration:
 
 ```cpp
 static std::string getVersion();
@@ -234,14 +232,14 @@ cout << "ConfigReader class version: " << ConfigReader::getVersion() << endl;
 Console output:
 
 ```bash
-ConfigReader class version: 1.3.0
+ConfigReader class version: 1.3.1
 ```
 
 
 
 ## readFromFile method
 
-**readFromFile(...)** method designed to read config file. The method reads the contents of the config file and stores it in the internal **ConfigReader** class variables.  Method declaration:
+The **readFromFile(...)** method designed to read config file. The method reads the contents of the config file and stores it in the internal **ConfigReader** class variables. Method declaration:
 
 ```cpp
 bool readFromFile(std::string fileName);
@@ -258,14 +256,14 @@ Example:
 ```cpp
 ConfigReader inConfig;
 if(!inConfig.readFromFile("TestConfig.json"))
-    cout << "ERROR: Can't read file" << endl;
+    cout << "Can't read file" << endl;
 ```
 
 
 
 ## writeToFile method
 
-**writeToFile(...)** method designed to write config file. If config file already exists the method will rewrite it. To write config file user must call method **set(...)** before **writeToFile(...)** to put parameters structure into **ConfigReader** object. Method declaration:
+The **writeToFile(...)** method designed to write config file. If config file already exists the method will rewrite it. To write config file user must call method **set(...)** before **writeToFile(...)** to put parameters structure into **ConfigReader** object. Method declaration:
 
 ```cpp
 bool writeToFile(std::string fileName);
@@ -283,18 +281,18 @@ Example:
 // Copy params to config reader.
 ConfigReader outConfig;
 if (!outConfig.set(outParams, "Params"))
-    cout << "ERROR: Can't copy params" << endl;
+    cout << "Can't copy params" << endl;
 
 // Create and write JSON file.
 if (!outConfig.writeToFile("TestConfig.json"))
-    cout << "ERROR: Can't write file" << endl;
+    cout << "Can't write file" << endl;
 ```
 
 
 
 ## readFromString method
 
-**readFromString(...)** method designed to read parameters from string. The method reads the contents of the string and stores it in the internal **ConfigReader** class variables. Method declaration:
+The **readFromString(...)** method designed to read parameters from string. The method reads the contents of the string and stores it in the internal **ConfigReader** class variables. Method declaration:
 
 ```cpp
 bool readFromString(std::string json);
@@ -311,7 +309,7 @@ Example:
 ```cpp
 ConfigReader inConfig;
 if(!inConfig.readFromString(jsonData))
-    cout << "ERROR: Can't read file" << endl;
+    cout << "Can't read file" << endl;
 ```
 
 
@@ -336,19 +334,19 @@ Example:
 // Copy params to config reader.
 ConfigReader outConfig;
 if (!outConfig.set(outParams, "Params"))
-    cout << "ERROR: Can't copy params" << endl;
+    cout << "Can't copy params" << endl;
 
 // Write params to string.
 string jsonData;
 if (!outConfig.writeToString(jsonData))
-    cout << "ERROR: Can't write file" << endl;
+    cout << "Can't write file" << endl;
 ```
 
 
 
 ## get method
 
-**get(...)** method designed to parse parameters structure which was read from file or string. The method parser parameters according to given parameters structure (see **Basic principles**). Method declaration:
+The **get(...)** method designed to parse parameters structure which was read from file or string. The method parses parameters according to given parameters structure (see [Basic principles](#basic-principles)). Method declaration:
 
 ```cpp
 template<class T>
@@ -357,8 +355,8 @@ bool get(T& obj, std::string objName = "");
 
 | Parameter | Description                                                  |
 | --------- | ------------------------------------------------------------ |
-| obj       | Parameters class object (see **Basic principles**). This object (parameters initialization) will be initialized by method. |
-| objName   | Name of object/parameters. To be read successfully, the parameter structure (loaded from a file or string) must match a user-defined parameter class (see **Basic principles**). |
+| obj       | Parameters class object (see [Basic principles](#basic-principles)). This object (parameters initialization) will be initialized by method. |
+| objName   | Name of object/parameters. To be read successfully, the parameter structure (loaded from a file or string) must match a user-defined parameter class (see [Basic principles](#basic-principles)). |
 
 **Returns:** TRUE if parameters was parsed FALSE if not.
 
@@ -380,17 +378,17 @@ if(!inConfig.get(inParams, "Params"))
 
 ## set method
 
-**set(...)** method designed put parameters structure into **ConfigReader** class to write to file (**writeToFile(...)** method) or string (**writeToString(...)** method) (see **Basic principles**). Method declaration:
+The **set(...)** method designed put parameters structure into **ConfigReader** class to write to file ([writeToFile(...)](#writetofile-method) method) or string ([writeToString(...)](#writetostring-method) method) (see [Basic principles](#basic-principles)). Method declaration:
 
 ```cpp
 template<class T>
 bool set(T& obj, std::string objName = "");
 ```
 
-| Parameter | Description                                         |
-| --------- | --------------------------------------------------- |
-| obj       | Parameters class object (see **Basic principles**). |
-| objName   | Name of object/parameters.                          |
+| Parameter | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| obj       | Parameters class object (see [Basic principles](#basic-principles)). |
+| objName   | Name of object / parameters.                                 |
 
 **Returns:** TRUE if parameters was copied FALSE if not.
 
@@ -400,11 +398,11 @@ Example:
 // Copy params to config reader.
 ConfigReader outConfig;
 if (!outConfig.set(outParams, "Params"))
-    cout << "ERROR: Can't copy params" << endl;
+    cout << "Can't copy params" << endl;
 
 // Create and write JSON file.
 if (!outConfig.writeToFile("TestConfig.json"))
-    cout << "ERROR: Can't write file" << endl;
+    cout << "Can't write file" << endl;
 ```
 
 
@@ -788,7 +786,7 @@ src
 You can add repository **ConfigReader** as submodule by command:
 
 ```bash
-cd <your respository folder>
+cd <your repository folder>
 git submodule add https://github.com/ConstantRobotics-Ltd/ConfigReader.git 3rdparty/ConfigReader
 ```
 
