@@ -39,7 +39,6 @@ SET(${PARENT}_CONFIG_READER_EXAMPLES         ON  CACHE BOOL "" ${REWRITE_FORCE})
 ## Adding subdirectories according to the project configuration
 ################################################################################
 if (${PARENT}_CONFIG_READER)
-    add_subdirectory(3rdparty)
     add_subdirectory(src)
 endif()
 if (${PARENT}_CONFIG_READER_EXAMPLES)
