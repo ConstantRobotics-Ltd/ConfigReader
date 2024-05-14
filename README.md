@@ -2,7 +2,7 @@
 
 
 
-**v1.3.1**
+**v1.4.0**
 
 
 
@@ -46,6 +46,7 @@ The **ConfigReader** library is designed to read / write config files or strings
 | 1.2.0   | 26.04.2023   | - CMake updated.                                             |
 | 1.3.0   | 27.06.2023   | - Useless methods excluded.<br />- Added examples.<br />- Added documentation.<br />- Added license.<br />- Repository made public. |
 | 1.3.1   | 19.03.2024   | - Documentation updated.                                     |
+| 1.4.0   | 14.05.2024   | - Nlohmann JSON implementation moved to src file.            |
 
 
 
@@ -57,18 +58,14 @@ The library supplied by source code only. The user would be given a set of files
 
 ```
 CMakeLists.txt ---------------- Main CMake file of the library.
-3rdparty ---------------------- Folder with third party libraries.
-    CMakeLists.txt ------------ CMake file to include third party library.
-    Json ---------------------- Folder with JSON for Modern C++ library.
-        CMakeLists.txt -------- CMake file of the library.
-        nlohmann -------------- Folder with library source code.
-            json.hpp ---------- C++ implementation file.
+            
 src --------------------------- Folder with library source code.
     CMakeLists.txt ------------ CMake file.
     ConfigReader.h ------------ Main library header file.
     ConfigReaderVersion.h ----- Header file with library version.
     ConfigReaderVersion.h.in -- File for CMake to generate version header.
     ConfigReader.cpp ---------- C++ implementation file.
+    nlohmann_json.hpp --------- C++ implementation file of JSON nlohmann.
 examples ---------------------- Folder with examples.
     WriteAndReadFile ---------- Folder with example application.
         CMakeLists.txt -------- CMake file of example application.
@@ -232,7 +229,7 @@ cout << "ConfigReader class version: " << ConfigReader::getVersion() << endl;
 Console output:
 
 ```bash
-ConfigReader class version: 1.3.1
+ConfigReader class version: 1.4.0
 ```
 
 
