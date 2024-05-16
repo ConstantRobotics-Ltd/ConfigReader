@@ -1,6 +1,8 @@
-![configreader_logo](_static/configreader_web_logo.png)
+![configreader_logo](./static/configreader_web_logo.png)
 
 
+
+# ConfigReader C++ library
 
 **v1.4.0**
 
@@ -24,7 +26,6 @@
 - [Examples](#examples)
   - [Read and write config file](#read-and-write-config-file)
   - [Read and write parameters to string](#read-and-write-parameters-to-string)
-
 - [Build and connect to your project](#build-and-connect-to-your-project)
 
 
@@ -46,7 +47,7 @@ The **ConfigReader** library is designed to read / write config files or strings
 | 1.2.0   | 26.04.2023   | - CMake updated.                                             |
 | 1.3.0   | 27.06.2023   | - Useless methods excluded.<br />- Added examples.<br />- Added documentation.<br />- Added license.<br />- Repository made public. |
 | 1.3.1   | 19.03.2024   | - Documentation updated.                                     |
-| 1.4.0   | 14.05.2024   | - Nlohmann JSON implementation moved to src file.            |
+| 1.4.0   | 14.05.2024   | - Nlohmann JSON implementation moved to src file.<br />- Documentation updated. |
 
 
 
@@ -57,10 +58,9 @@ The **ConfigReader** library is designed to read / write config files or strings
 The library supplied by source code only. The user would be given a set of files in the form of a CMake project (repository). The repository structure is shown below:
 
 ```
-CMakeLists.txt ---------------- Main CMake file of the library.
-            
+CMakeLists.txt ---------------- Main CMake file of the library.       
 src --------------------------- Folder with library source code.
-    CMakeLists.txt ------------ CMake file.
+    CMakeLists.txt ------------ CMake file of the library.
     ConfigReader.h ------------ Main library header file.
     ConfigReaderVersion.h ----- Header file with library version.
     ConfigReaderVersion.h.in -- File for CMake to generate version header.
