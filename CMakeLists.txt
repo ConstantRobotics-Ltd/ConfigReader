@@ -30,7 +30,7 @@ endif()
 ## project configuration
 ################################################################################
 SET(${PARENT}_CONFIG_READER                  ON  CACHE BOOL "" ${REWRITE_FORCE})
-SET(${PARENT}_CONFIG_READER_EXAMPLES         ON  CACHE BOOL "" ${REWRITE_FORCE})
+SET(${PARENT}_CONFIG_READER_EXAMPLES         OFF CACHE BOOL "" ${REWRITE_FORCE})
 
 
 
