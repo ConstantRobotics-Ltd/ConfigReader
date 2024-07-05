@@ -7,16 +7,17 @@
 
 
 
-// Method to get class version.
+using namespace nlohmann;
+
+
+
 std::string cr::utils::ConfigReader::getVersion()
 {
-    // Return version string.
     return CONFIG_READRER_VERSION;
 }
 
 
 
-// Class constructor.
 cr::utils::ConfigReader::ConfigReader()
 {
 
@@ -24,7 +25,6 @@ cr::utils::ConfigReader::ConfigReader()
 
 
 
-// Class destructor.
 cr::utils::ConfigReader::~ConfigReader()
 {
 
@@ -32,7 +32,6 @@ cr::utils::ConfigReader::~ConfigReader()
 
 
 
-// Method to read configuration from file.
 bool cr::utils::ConfigReader::readFromFile(std::string fileName)
 {
     // Open JSON file.
@@ -61,7 +60,6 @@ bool cr::utils::ConfigReader::readFromFile(std::string fileName)
 
 
 
-// Method to write configuration to file.
 bool cr::utils::ConfigReader::writeToFile(std::string fileName)
 {
     // Create output stream.
@@ -78,7 +76,6 @@ bool cr::utils::ConfigReader::writeToFile(std::string fileName)
 
 
 
-// Method to read configuration from string.
 bool cr::utils::ConfigReader::readFromString(std::string json)
 {
     // Parse JSON.
@@ -97,7 +94,6 @@ bool cr::utils::ConfigReader::readFromString(std::string json)
 
 
 
-// Method to write configuration to string.
 bool cr::utils::ConfigReader::writeToString(std::string &json)
 {
     // Parse JSON.
@@ -116,7 +112,6 @@ bool cr::utils::ConfigReader::writeToString(std::string &json)
 
 
 
-// Set recursive.
 json cr::utils::ConfigReader::setRecursive(json dst, json src,
                                            std::vector<std::string> tokenList)
 {
@@ -142,6 +137,3 @@ json cr::utils::ConfigReader::setRecursive(json dst, json src,
         return src;
     }
 }
-
-
-

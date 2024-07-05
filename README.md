@@ -4,7 +4,7 @@
 
 # ConfigReader C++ library
 
-**v1.4.0**
+**v1.4.1**
 
 
 
@@ -48,6 +48,7 @@ The **ConfigReader** library is designed to read / write config files or strings
 | 1.3.0   | 27.06.2023   | - Useless methods excluded.<br />- Added examples.<br />- Added documentation.<br />- Added license.<br />- Repository made public. |
 | 1.3.1   | 19.03.2024   | - Documentation updated.                                     |
 | 1.4.0   | 14.05.2024   | - Nlohmann JSON implementation moved to src file.<br />- Documentation updated. |
+| 1.4.1   | 05.07.2024   | - CMake changed.                                             |
 
 
 
@@ -65,7 +66,7 @@ src --------------------------- Folder with library source code.
     ConfigReaderVersion.h ----- Header file with library version.
     ConfigReaderVersion.h.in -- File for CMake to generate version header.
     ConfigReader.cpp ---------- C++ implementation file.
-    nlohmann_json.hpp --------- C++ implementation file of JSON nlohmann.
+    nlohmann_json.hpp --------- JSON nlohmann library file.
 examples ---------------------- Folder with examples.
     WriteAndReadFile ---------- Folder with example application.
         CMakeLists.txt -------- CMake file of example application.
@@ -153,9 +154,9 @@ public:
     double param3{-10.0};
     /// Parameter.
     bool param4{false};
-    /// Mass of parameters.
+    /// Array of parameters.
     float mass1[3];
-    /// Mass of parameters.
+    /// Array of parameters.
     int mass2[3];
     /// List of parameters.
     vector<int> list1{vector<int>()};
@@ -229,7 +230,7 @@ cout << "ConfigReader class version: " << ConfigReader::getVersion() << endl;
 Console output:
 
 ```bash
-ConfigReader class version: 1.4.0
+ConfigReader class version: 1.4.1
 ```
 
 
@@ -244,7 +245,7 @@ bool readFromFile(std::string fileName);
 
 | Parameter | Description              |
 | --------- | ------------------------ |
-| fileName  | Configuration file name. |
+| fileName  | JSON file name.          |
 
 **Returns:** TRUE if config file was read or FALSE if not.
 
@@ -260,7 +261,7 @@ if(!inConfig.readFromFile("TestConfig.json"))
 
 ## writeToFile method
 
-The **writeToFile(...)** method designed to write config file. If config file already exists the method will rewrite it. To write config file user must call method **set(...)** before **writeToFile(...)** to put parameters structure into **ConfigReader** object. Method declaration:
+The **writeToFile(...)** method designed to write config file. If config file already exists the method will rewrite it. To write config file user must call method [set(...)](#set-method) method before **writeToFile(...)** to put parameters structure into **ConfigReader** object. Method declaration:
 
 ```cpp
 bool writeToFile(std::string fileName);
@@ -313,7 +314,7 @@ if(!inConfig.readFromString(jsonData))
 
 ## writeToString method
 
-**writeToString(...)** method designed to write params to string. To write parameters to string user must call method **set(...)** before **writeToString(...)** to put parameters structure into **ConfigReader** object. Method declaration:
+The **writeToString(...)** method designed to write params to string. To write parameters to string user must call method [set(...)](#set-method) method before **writeToString(...)** to put parameters structure into **ConfigReader** object. Method declaration:
 
 ```cpp
 bool writeToString(std::string& json);
@@ -787,7 +788,7 @@ cd <your repository folder>
 git submodule add https://github.com/ConstantRobotics-Ltd/ConfigReader.git 3rdparty/ConfigReader
 ```
 
-In you repository folder will be created folder **3rdparty/ConfigReader** which contains files of **ConfigReader** repository. New structure of your repository:
+In you repository folder will be created folder **3rdparty/ConfigReader** which contains files of **ConfigReader** repository. Also you can copy **ConfigReader** repository folder to **3rdparty** folder or your repository. New structure of your repository:
 
 ```bash
 CMakeLists.txt
@@ -838,7 +839,7 @@ if (${PARENT}_SUBMODULE_CONFIG_READER)
 endif()
 ```
 
-File **3rdparty/CMakeLists.txt** adds folder **ConfigReader** to your project and excludes examples (ConfigReader class usage examples) from compiling. Your repository new structure will be:
+File **3rdparty/CMakeLists.txt** adds folder **ConfigReader** to your project and excludes examples (ConfigReader class usage examples) from compiling (by default examples excluded from compiling if **ConfigReader** added as sub-repository). Your repository new structure will be:
 
 ```bash
 CMakeLists.txt

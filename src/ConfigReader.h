@@ -4,7 +4,7 @@
 #include <vector>
 #include "nlohmann_json.hpp"
 
-using namespace nlohmann;
+
 
 namespace cr
 {
@@ -47,21 +47,21 @@ public:
     /**
      * @brief Write configuration to file.
      * @param fileName File name to write configuration.
-     * @return TRUE if the configuration was writed or FALSE if not.
+     * @return TRUE if the configuration recorder or FALSE if not.
      */
     bool writeToFile(std::string fileName);
 
     /**
      * @brief Read configuration from string.
      * @param json String to read configuration.
-     * @return TRUE if the configuration was read or FALSE if not.
+     * @return TRUE if the configuration recorder or FALSE if not.
      */
     bool readFromString(std::string json);
 
     /**
      * @brief Write configuration to string.
      * @param json String name to write configuration.
-     * @return TRUE if the configuration was writed or FALSE if not.
+     * @return TRUE if the configuration was wried or FALSE if not.
      */
     bool writeToString(std::string& json);
 
@@ -73,7 +73,7 @@ public:
      */
     template<class T>
     bool get(T& obj, std::string objName = "") {
-    json _j;
+    nlohmann::json _j;
     if (!objName.empty())
     {
         std::string delimiter = ".";
@@ -107,7 +107,7 @@ public:
      */
     template<class T>
     bool set(T& obj, std::string objName = "") {
-    json _j = m_jsonConf;
+    nlohmann::json _j = m_jsonConf;
     std::string _name = objName;
     std::vector<std::string> tokenList = std::vector<std::string>();
     if (!objName.empty())
@@ -134,10 +134,11 @@ public:
 private:
 
     /// Json object.
-    json m_jsonConf;
+    nlohmann::json m_jsonConf;
 
     /// Set object recursive.
-    json setRecursive(json dst, json src, std::vector<std::string> tokenList);
+    nlohmann::json setRecursive(nlohmann::json dst, nlohmann::json src,
+                                std::vector<std::string> tokenList);
 };
 }
 }

@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.13)
 ## LIBRARY-PROJECT
 ## name and version
 ###############################################################################
-project(ConfigReader VERSION 1.4.0 LANGUAGES CXX)
+project(ConfigReader VERSION 1.4.1 LANGUAGES CXX)
 
 
 
@@ -36,8 +36,9 @@ configure_file(${IN_FILES} ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}Version.h)
 # create glob files for *.h, *.cpp
 file (GLOB_RECURSE H_FILES   ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 file (GLOB_RECURSE CPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file (GLOB_RECURSE HPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
 # concatenate the results (glob files) to variable
-set  (SOURCES ${CPP_FILES} ${H_FILES})
+set  (SOURCES ${CPP_FILES} ${H_FILES} ${HPP_FILES})
 # create lib from src
 if (NOT TARGET ${PROJECT_NAME})
     add_library(${PROJECT_NAME} ${SOURCES})
